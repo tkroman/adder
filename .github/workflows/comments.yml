@@ -1,0 +1,14 @@
+name: run on PR comment keyword
+on:
+  issue_comment:
+    types: [created, edited, deleted]
+
+jobs:
+  main:
+    if: contains(github.event.comment.html_url, '/pull/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: run code
+        if: contains(github.event.comment.body, '/run')
+        run: |
+          sbt -error run
